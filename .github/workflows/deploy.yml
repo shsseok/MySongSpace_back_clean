@@ -1,0 +1,37 @@
+name: Deploy to EC2 SERVER_MYSONGSPACE
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH MYSONGSPACE EC2 CONNECT
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            echo "===== DEPLOY START ====="
+
+            cd /home/ec2-user/mysongspace
+
+            echo "===== Git Pull ====="
+            git pull origin main
+
+            echo "===== Docker Compose Down ====="
+            docker-compose down
+
+            echo "===== Docker Image Pull ====="
+            docker-compose pull
+
+            echo "===== Docker Compose Up ====="
+            docker-compose up -d --build
+
+            echo "===== Deploy Finished ====="

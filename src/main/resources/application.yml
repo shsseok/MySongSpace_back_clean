@@ -1,0 +1,3 @@
+spring:
+  profiles:
+    active: local  # 기본 프로파일로 "local"을 설정
