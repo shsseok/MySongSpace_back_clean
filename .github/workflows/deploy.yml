@@ -13,25 +13,19 @@ jobs:
       - name: SSH MYSONGSPACE EC2 CONNECT
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          port: 22
           script: |
             echo "===== DEPLOY START ====="
-
             cd /home/ec2-user/mysongspace
-
             echo "===== Git Pull ====="
             git pull origin main
-
             echo "===== Docker Compose Down ====="
             docker-compose down
-
             echo "===== Docker Image Pull ====="
             docker-compose pull
-
             echo "===== Docker Compose Up ====="
             docker-compose up -d --build
-
             echo "===== Deploy Finished ====="
