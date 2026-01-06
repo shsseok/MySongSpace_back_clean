@@ -19,7 +19,7 @@ jobs:
           port: 22
           script: |
             echo "===== DEPLOY START ====="
-            cd /mysongspace
+            cd mysongspace
             echo "===== Git Pull ====="
             git pull origin main
             echo "===== Docker Compose Down ====="
