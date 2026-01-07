@@ -44,7 +44,7 @@ jobs:
             set -euo pipefail
             echo "===== DEPLOY START ====="
 
-            cd ~/mysongspace
+            cd mysongspace
 
             docker --version
             docker compose version
