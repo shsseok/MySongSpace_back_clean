@@ -9,15 +9,16 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
     networks:
       - mynetwork
-
+    volumes:
+      - db_data:/var/lib/mysql
   redis:
     image: redis:alpine
     container_name: mysongspace_redis
     networks:
       - mynetwork
-
+    volumes:
+      - redis_data:/data
   app:
-    build: .
     image: simhyeonseok/mysongspace_myapp:latest
     container_name: myapp
     ports:
@@ -36,3 +37,7 @@ services:
 networks:
   mynetwork:
     driver: bridge
+
+volumes:
+  db_data:
+  redis_data:

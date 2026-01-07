@@ -2,15 +2,38 @@ name: Deploy to EC2 SERVER_MYSONGSPACE
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
-  Deploy:
+  build-and-push:
     runs-on: ubuntu-latest
-
     steps:
-      - name: SSH MYSONGSPACE EC2 CONNECT
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            simhyeonseok/mysongspace_myapp:latest
+            simhyeonseok/mysongspace_myapp:${{ github.sha }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH EC2 and deploy with docker compose
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.EC2_HOST }}
@@ -18,14 +41,21 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           port: 22
           script: |
+            set -euo pipefail
             echo "===== DEPLOY START ====="
-            cd mysongspace
-            echo "===== Git Pull ====="
-            git pull origin main
-            echo "===== Docker Compose Down ====="
-            docker-compose down
-            echo "===== Docker Image Pull ====="
-            docker-compose pull
-            echo "===== Docker Compose Up ====="
-            docker-compose up -d --build
-            echo "===== Deploy Finished ====="
+
+            cd ~/mysongspace
+
+            docker --version
+            docker compose version
+
+            echo "===== Docker Hub Login (for private future-proof) ====="
+            echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+            echo "===== Pull & Up ====="
+            docker compose pull
+            docker compose up -d
+
+            echo "===== Status ====="
+            docker ps -a
+            echo "===== DEPLOY FINISHED ====="
