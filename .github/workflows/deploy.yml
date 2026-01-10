@@ -57,14 +57,14 @@ jobs:
             cd mysongspace
 
             docker --version
-            docker compose version
+            docker-compose -v
 
             echo "===== Docker Hub Login (for private future-proof) ====="
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
             echo "===== Pull & Up ====="
-            docker compose pull
-            docker compose up -d
+            docker-compose pull
+            docker-compose up -d
 
             echo "===== Status ====="
             docker ps -a
