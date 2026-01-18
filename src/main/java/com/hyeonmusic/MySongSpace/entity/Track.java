@@ -58,6 +58,7 @@ public class Track {
         this.genres = TrackGenre.createTrackGenreList(this, genres);
         this.moods = TrackMood.createTrackMoodList(this, moods);
         this.uploadedAt = LocalDateTime.now();
+        this.totalPlayCount = 0L;
         this.member = member;
     }
 
@@ -72,6 +73,8 @@ public class Track {
         track.moods = TrackMood.createTrackMoodList(track, trackUploadDTO.getMoods());
         track.uploadedAt = LocalDateTime.now();
         track.member = member; // 업로드한 사용자를 설정
+        // 트랙 재생수 초기화 작업
+        track.totalPlayCount = 0L;
         return track;
     }
 

@@ -34,14 +34,24 @@ public class TrackPlayDaily {
     @Column(nullable = false)
     private Long playCount;
 
-    // 생성용 생성자
     public TrackPlayDaily(LocalDate playDate, Track track) {
         this.playDate = playDate;
         this.track = track;
         this.playCount = 1L;
     }
 
-    // 비즈니스 로직
+    /**
+     * 하루 최초 재생 시 생성
+     * playCount = 1로 시작
+     */
+    public static TrackPlayDaily createTrackPlayDaily(LocalDate playDate, Track track) {
+        TrackPlayDaily trackPlayDaily = new TrackPlayDaily();
+        trackPlayDaily.playDate = playDate;
+        trackPlayDaily.track = track;
+        trackPlayDaily.playCount = 1L;
+        return trackPlayDaily;
+    }
+
     public void increasePlayCount() {
         this.playCount++;
     }
