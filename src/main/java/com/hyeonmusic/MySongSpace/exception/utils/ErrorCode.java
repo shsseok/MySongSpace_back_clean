@@ -43,8 +43,9 @@ public enum ErrorCode {
     S3_SERVICE_ERROR(INTERNAL_SERVER_ERROR, "AWS S3에 파일 업로드 중 오류가 발생했습니다."),
     // like
     ALREADY_LIKED(CONFLICT, "이미 좋아요를 눌렀습니다."),
-    LIKE_NOT_FOUND(NOT_FOUND, "좋아요를 찾을 수 없습니다.");
-
+    LIKE_NOT_FOUND(NOT_FOUND, "좋아요를 찾을 수 없습니다."),
+    // 재생수
+    SESSION_NOT_FOUND(NOT_FOUND,"세션을 찾을 수 없습니다");
     private final HttpStatus httpStatus;
     private final String message;
 }

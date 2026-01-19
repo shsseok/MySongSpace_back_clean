@@ -26,6 +26,8 @@ public class Track {
     private FilePath filePath;
     private int duration; // 트랙 지속 시간 (초 단위)
     private int likeCount;
+    private Long totalPlayCount;
+
     private LocalDateTime uploadedAt; // 업로드 시간
 
     @OneToMany(mappedBy = "track", cascade = CascadeType.ALL)
@@ -56,6 +58,7 @@ public class Track {
         this.genres = TrackGenre.createTrackGenreList(this, genres);
         this.moods = TrackMood.createTrackMoodList(this, moods);
         this.uploadedAt = LocalDateTime.now();
+        this.totalPlayCount = 0L;
         this.member = member;
     }
 
@@ -64,12 +67,14 @@ public class Track {
         Track track = new Track();
         track.title = trackUploadDTO.getTitle();
         track.description = trackUploadDTO.getDescription();
-        track.filePath= new FilePath(musicPath, coverPath);
+        track.filePath = new FilePath(musicPath, coverPath);
         track.duration = trackUploadDTO.getDuration();
         track.genres = TrackGenre.createTrackGenreList(track, trackUploadDTO.getGenres());
         track.moods = TrackMood.createTrackMoodList(track, trackUploadDTO.getMoods());
         track.uploadedAt = LocalDateTime.now();
         track.member = member; // 업로드한 사용자를 설정
+        // 트랙 재생수 초기화 작업
+        track.totalPlayCount = 0L;
         return track;
     }
 
@@ -82,6 +87,11 @@ public class Track {
     public void decreaseLikeCount() {
         this.likeCount--;
     }
+
+    public void increasePlayCount() {
+        this.totalPlayCount++;
+    }
+
 }
 
 
