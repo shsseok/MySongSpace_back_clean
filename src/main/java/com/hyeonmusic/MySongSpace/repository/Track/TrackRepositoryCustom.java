@@ -15,4 +15,5 @@ public interface TrackRepositoryCustom {
                                       @Param("sortBy") String sortBy,
                                       @Param("keyword") String keyword,
                                       Pageable pageable);
+    List<Track> findTracksWithMemberByTracksId(List<Long> tracksId);
 }

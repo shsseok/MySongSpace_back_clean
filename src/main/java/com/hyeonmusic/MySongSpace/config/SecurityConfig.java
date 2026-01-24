@@ -59,7 +59,8 @@ public class SecurityConfig {
                                         new AntPathRequestMatcher("/api/tracks","GET"),
                                         new AntPathRequestMatcher("/api/tracks/*","GET"),
                                         //재생수 API 관련 시큐리티 비활성화
-                                        new AntPathRequestMatcher("/api/tracks/*/plays","POST")
+                                        new AntPathRequestMatcher("/api/tracks/*/plays","POST"),
+                                        new AntPathRequestMatcher("/api/tracks/popular/**","GET")
                                 ).permitAll()
                                 .anyRequest().authenticated()
                 )
