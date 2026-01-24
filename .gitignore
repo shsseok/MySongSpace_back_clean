@@ -43,3 +43,5 @@ src/main/generated
 
 ### Local-only Spring configs
 src/main/resources/application-local.yml
+### DataLoader 제거
+**/*DataLoader.java

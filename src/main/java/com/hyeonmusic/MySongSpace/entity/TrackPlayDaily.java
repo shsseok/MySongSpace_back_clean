@@ -51,7 +51,13 @@ public class TrackPlayDaily {
         trackPlayDaily.playCount = 1L;
         return trackPlayDaily;
     }
-
+    public static TrackPlayDaily createTrackPlayDaily(LocalDate playDate, Track track,Long playCount) {
+        TrackPlayDaily trackPlayDaily = new TrackPlayDaily();
+        trackPlayDaily.playDate = playDate;
+        trackPlayDaily.track = track;
+        trackPlayDaily.playCount = playCount;
+        return trackPlayDaily;
+    }
     public void increasePlayCount() {
         this.playCount++;
     }

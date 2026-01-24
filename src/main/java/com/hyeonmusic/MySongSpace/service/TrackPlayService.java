@@ -1,6 +1,5 @@
 package com.hyeonmusic.MySongSpace.service;
 
-import com.hyeonmusic.MySongSpace.dto.record.TrackPlayRequest;
 import com.hyeonmusic.MySongSpace.entity.Member;
 import com.hyeonmusic.MySongSpace.entity.Track;
 import com.hyeonmusic.MySongSpace.entity.TrackPlayDaily;
@@ -8,10 +7,9 @@ import com.hyeonmusic.MySongSpace.entity.TrackPlayLog;
 import com.hyeonmusic.MySongSpace.exception.MemberNotFoundException;
 import com.hyeonmusic.MySongSpace.exception.SessionNotFoundException;
 import com.hyeonmusic.MySongSpace.exception.TrackNotFoundException;
-import com.hyeonmusic.MySongSpace.exception.utils.ErrorCode;
 import com.hyeonmusic.MySongSpace.repository.MemberRepository;
 import com.hyeonmusic.MySongSpace.repository.Track.TrackRepository;
-import com.hyeonmusic.MySongSpace.repository.TrackPlayDailyRepository;
+import com.hyeonmusic.MySongSpace.repository.TrackPlayDaily.TrackPlayDailyRepository;
 import com.hyeonmusic.MySongSpace.repository.TrackPlayLogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

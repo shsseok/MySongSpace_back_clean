@@ -59,7 +59,7 @@ jobs:
             docker --version
             docker compose version
 
-            echo "===== Docker Hub Login (for private future-proof) ====="
+            echo "===== Docker Hub Login ====="
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
             echo "===== Pull & Up ====="

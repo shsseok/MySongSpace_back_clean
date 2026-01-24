@@ -54,6 +54,13 @@ public class TrackRepositoryImpl implements TrackRepositoryCustom {
         return PageableExecutionUtils.getPage(content, pageable, () -> countQuery.fetchOne());
     }
 
+    public List<Track> findTracksWithMemberByTracksId(List<Long> trackIds) {
+        return queryFactory
+                .selectFrom(qTrack)
+                .join(qTrack.member, qMember).fetchJoin()
+                .where(qTrack.trackId.in(trackIds))
+                .fetch();
+    }
     private OrderSpecifier<?> orderMethod(String sortBy) {
         if (sortBy.equals("popular")) {
             return qTrack.likeCount.desc();
