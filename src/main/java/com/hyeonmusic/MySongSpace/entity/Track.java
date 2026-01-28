@@ -19,6 +19,8 @@ public class Track {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trackId; // 트랙 ID
     private String title; // 트랙 제목
+
+    @Lob
     private String description; // 트랙 설명
 
     // 음악 파일 PATH, 이미지 파일 PATH
@@ -61,8 +63,18 @@ public class Track {
         this.totalPlayCount = 0L;
         this.member = member;
     }
-
-
+    //더미 데이터용 생성자
+    public Track(String title, String description, String musicPath, String coverPath, int duration, List<Genre> genres, List<Mood> moods, Member member,Long totalPlayCount) {
+        this.title = title;
+        this.description = description;
+        this.filePath = new FilePath(musicPath, coverPath);
+        this.duration = duration;
+        this.genres = TrackGenre.createTrackGenreList(this, genres);
+        this.moods = TrackMood.createTrackMoodList(this, moods);
+        this.uploadedAt = LocalDateTime.now();
+        this.totalPlayCount = totalPlayCount;
+        this.member = member;
+    }
     public static Track createTrack(TrackUploadDTO trackUploadDTO, Member member, String musicPath, String coverPath) {
         Track track = new Track();
         track.title = trackUploadDTO.getTitle();
